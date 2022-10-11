@@ -1,12 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SnakeController : MonoBehaviour
 {
+    [SerializeField] characterTypes character;
     private Vector2 direction;
     private Vector2 savedDirection;
+
+    private PlayerController playerController;
+    InputAction move;
+    private void Awake()
+    {
+        playerController = new PlayerController();
+        if(character == characterTypes.player1)
+        {
+        move = playerController.Snake1.Move;
+        }
+        else if (character == characterTypes.player2)
+        {
+        move = playerController.Snake2.Move;
+        }
+        move.performed += OnMove;
+        move.Enable();
+    }
     private void Start()
     {
         savedDirection = direction;
@@ -18,10 +37,7 @@ public class SnakeController : MonoBehaviour
     }
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
         direction = context.ReadValue<Vector2>();
-        }
     }
     private void SetDirection()
     {
@@ -43,5 +59,11 @@ public class SnakeController : MonoBehaviour
     {
         this.transform.position = new Vector3(Mathf.Round(transform.position.x) + direction.x, Mathf.Round(transform.position.y) + direction.y, 0);
         savedDirection = direction;
+    }
+
+    private enum characterTypes
+    {
+        player1,
+        player2,
     }
 }
