@@ -54,6 +54,7 @@ public class FoodController : MonoBehaviour
         if(collision.gameObject.GetComponent<SnakeController>() != null)
         {
             FoodPositionAllocation();
+            SnakeController.Instance.GrowBody();
         }
     }
 

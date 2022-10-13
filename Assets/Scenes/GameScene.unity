@@ -761,6 +761,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2422080448181958496, guid: 0ec514b7b94a26e4c932d9cb63383280, type: 3}
+      propertyPath: snakeBodySegment
+      value: 
+      objectReference: {fileID: 8374659229883700367, guid: ea8aebf1b8d811745a3a5d2d955224b1, type: 3}
     - target: {fileID: 2422080448181958499, guid: 0ec514b7b94a26e4c932d9cb63383280, type: 3}
       propertyPath: m_Name
       value: Snake
@@ -815,38 +819,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ec514b7b94a26e4c932d9cb63383280, type: 3}
---- !u!1 &2422080448834801159 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2422080448181958499, guid: 0ec514b7b94a26e4c932d9cb63383280, type: 3}
-  m_PrefabInstance: {fileID: 2422080448834801158}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2422080448834801160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2422080448834801159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: f717e073705d8f849bfd85493feec92c, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
