@@ -10,6 +10,12 @@ public class FoodController : MonoBehaviour
     private SpriteRenderer foodSpriteRenderer;
 
     private int randNumForSpriteSelection;
+
+    // Taking the value from the inspector to add value to the food
+    [SerializeField] int healthyFoodValue;
+    [SerializeField] int specialHealthFoodValue;
+
+    private int Score = 0;
     
     FoodType foodType;
     private void Awake()
@@ -36,13 +42,11 @@ public class FoodController : MonoBehaviour
         foodType = DeterminingTheFoodType();
         if (foodType == FoodType.Healthy)
         {
-            foodSpriteRenderer.sprite = foodSprites[0];
-            // healthy feature...
+            foodSpriteRenderer.sprite = foodSprites[0];  
         }
         else if(foodType == FoodType.SpecialFood)
         {
             foodSpriteRenderer.sprite = foodSprites[1];
-            // posion features...
         }
         Bounds bounds = confiner.bounds;
         float tempX = Random.Range(bounds.min.x, bounds.max.x);
@@ -53,10 +57,24 @@ public class FoodController : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<SnakeController>() != null)
         {
+            if (foodType == FoodType.Healthy)
+            {
+                FoodFeatures(healthyFoodValue);
+            }
+            else if(foodType == FoodType.SpecialFood)
+            {
+                FoodFeatures(specialHealthFoodValue);
+            }
             FoodPositionAllocation();
-            SnakeController.Instance.GrowBody();
+            
         }
     }
+
+    private void FoodFeatures(int point)
+    {
+        Score += point;
+    }
+
 
 
 

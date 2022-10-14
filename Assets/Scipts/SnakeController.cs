@@ -4,14 +4,6 @@ using UnityEngine.InputSystem;
 
 public class SnakeController : MonoBehaviour
 {
-    private static SnakeController instance;
-    public static SnakeController Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
     //Using enums to define the Character number to not make different scrpits for it
     [SerializeField] characterTypes character;
     private Vector2 direction;
@@ -28,34 +20,30 @@ public class SnakeController : MonoBehaviour
     InputAction move;
     private void Awake()
     {
-        if(instance == null)
+        // making the object of class player controller
+        playerController = new PlayerController();
+        //checking on which input type the playercontroller should be passed.
+        if (character == characterTypes.player1)
         {
-            instance = this;
-            // making the object of class player controller
-            playerController = new PlayerController();
-            //checking on which input type the playercontroller should be passed. 
-            if (character == characterTypes.player1)
-            {
-                move = playerController.Snake1.Move;
-            }
-            else if (character == characterTypes.player2)
-            {
-                move = playerController.Snake2.Move;
-            }
-            // subscribing to the event 
-            move.Enable();
-            move.performed += OnMove;
+            move = playerController.Snake1.Move;
         }
-        else
+        else if (character == characterTypes.player2)
         {
-            Destroy(this);
+            move = playerController.Snake2.Move;
         }
-        
+        // subscribing to the event 
+        move.Enable();
+        move.performed += OnMove;    
+    }
+    private void OnDisable()
+    {
+        move.Disable();
     }
     private void Start()
     {
         segment = new List<Transform>();
         segment.Add(this.transform);
+        
     }
     void Update()
     {
@@ -96,11 +84,27 @@ public class SnakeController : MonoBehaviour
         savedDirection = direction;
     }
 
-    public void GrowBody()
+    private void GrowBody()
     {
         Transform body = Instantiate(snakeBodySegment);
         body.position = segment[segment.Count - 1].position;
         segment.Add(body);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.TryGetComponent<ColliderTag>(out ColliderTag tags))
+        {
+            if(tags.type == ColliderTag.ColliderTags.Food)
+            {
+                GrowBody();
+            }
+            else if (tags.type == ColliderTag.ColliderTags.Boundary || tags.type == ColliderTag.ColliderTags.SnakeBody)
+            {
+                // Game Over
+                Debug.Log("Game Over");
+            }
+        }
     }
 
     private enum characterTypes
