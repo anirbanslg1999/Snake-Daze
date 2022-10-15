@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0.718097, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.82210064, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -149,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: 0
   snakeBodySegment: {fileID: 8374659229883700367, guid: ea8aebf1b8d811745a3a5d2d955224b1, type: 3}
+  lerpTime: 0
 --- !u!114 &1586059576289404606
 MonoBehaviour:
   m_ObjectHideFlags: 0

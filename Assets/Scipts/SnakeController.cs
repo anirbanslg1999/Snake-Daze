@@ -18,6 +18,8 @@ public class SnakeController : MonoBehaviour
     private PlayerController playerController;
     // To store the input action inside it.
     InputAction move;
+
+    [SerializeField] float lerpTime;
     private void Awake()
     {
         // making the object of class player controller
@@ -76,7 +78,8 @@ public class SnakeController : MonoBehaviour
     {
         for (int i = segment.Count - 1; i > 0; i--)
         {
-            segment[i].position = segment[i - 1].position;
+            segment[i].position =  segment[i - 1].position;
+
         }
         // changing the transform of the player to move.
         this.transform.position = new Vector3(Mathf.Round(transform.position.x) + direction.x, Mathf.Round(transform.position.y) + direction.y, 0);

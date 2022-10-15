@@ -173,12 +173,12 @@ public partial class @PlayerController : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Pause"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""4864f2a5-aaf2-46d9-8292-5f5894079704"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [

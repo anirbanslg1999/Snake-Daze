@@ -59,21 +59,17 @@ public class FoodController : MonoBehaviour
         {
             if (foodType == FoodType.Healthy)
             {
-                FoodFeatures(healthyFoodValue);
+                UIManager.Instance.IncrementCoinUI(healthyFoodValue);
             }
             else if(foodType == FoodType.SpecialFood)
             {
-                FoodFeatures(specialHealthFoodValue);
+                UIManager.Instance.IncrementCoinUI(specialHealthFoodValue);
             }
             FoodPositionAllocation();
             
         }
     }
 
-    private void FoodFeatures(int point)
-    {
-        Score += point;
-    }
 
 
 
