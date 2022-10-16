@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static SnakeController;
 
 public class UIManager : MonoBehaviour
 {
@@ -126,32 +127,44 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void GameOver()
+    public void GameOver(characterTypes character)
     {
         isGameOver = true;
         AudioManager.Instance.PlayEffectSound(SoundTypes.GameOver);
         inGamePanel.SetActive(false);
         pausePanel.SetActive(false);
         GameOverPanel.SetActive(true);
-        endDialogueBox();
+        endDialogueBox(character);
     }
-    private void endDialogueBox()
+    private void endDialogueBox(characterTypes character)
     {
         if(objectCheck != null)
         {
             int tempValue = MultiplayerManager.Instance.getPlayer2Score();
-            if(coinCount == tempValue)
-             {
-                 endPanelDialogueBox.text = "It's a draw between the player with a tie score of : " + coinCount.ToString();
-             }
-             else if (coinCount > tempValue)
-             {
-                 endPanelDialogueBox.text = "Player 1 won with a score of : " + coinCount.ToString();
-             }
-             else if(coinCount < tempValue)
-             {
-                 endPanelDialogueBox.text = "Player 2 won with a score of : " + tempValue.ToString();
-             }
+            if(character == characterTypes.player1)
+            {
+                 endPanelDialogueBox.text = "Player 1 lost and Player 2 won win with a score of : " + tempValue.ToString();
+            }
+            else if(character == characterTypes.player2)
+            {
+                 endPanelDialogueBox.text = "Player 2 lost and Player 1 won win with a score of : " + coinCount.ToString();
+            }
+            else
+            {
+                if (coinCount == tempValue)
+                {
+                    endPanelDialogueBox.text = "It's a draw between the player with a tie score of : " + coinCount.ToString();
+                }
+                else if (coinCount > tempValue)
+                {
+                    endPanelDialogueBox.text = "Player 1 won with a score of : " + coinCount.ToString();
+                }
+                else if (coinCount < tempValue)
+                {
+                    endPanelDialogueBox.text = "Player 2 won with a score of : " + tempValue.ToString();
+                }
+            }
+            
         }
         else
         {

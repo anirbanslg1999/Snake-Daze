@@ -105,12 +105,12 @@ public class SnakeController : MonoBehaviour
             else if (tags.type == ColliderTag.ColliderTags.Boundary || tags.type == ColliderTag.ColliderTags.SnakeBody)
             {
                 // Game Over
-                UIManager.Instance.GameOver();
+                UIManager.Instance.GameOver(character);
             }
         }
     }
 
-    private enum characterTypes
+    public enum characterTypes
     {
         player1,
         player2,
