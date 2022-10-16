@@ -52,7 +52,7 @@ public class BonusObjectController : MonoBehaviour
     private bool spawnProbability()
     {
         int temp = Random.Range(0, 100);
-        if(temp > 70)
+        if(temp > 50)
         {
             willSpawn = true;
         }
