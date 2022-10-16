@@ -45,12 +45,12 @@ public class SnakeController : MonoBehaviour
     {
         segment = new List<Transform>();
         segment.Add(this.transform);
+        AudioManager.Instance.PlayBackGroundSound(SoundTypes.GameBG);
         
     }
     void Update()
     {
         SetDirection();
-
     }
     private void OnMove(InputAction.CallbackContext context)
     {
@@ -105,7 +105,7 @@ public class SnakeController : MonoBehaviour
             else if (tags.type == ColliderTag.ColliderTags.Boundary || tags.type == ColliderTag.ColliderTags.SnakeBody)
             {
                 // Game Over
-                Debug.Log("Game Over");
+                UIManager.Instance.GameOver();
             }
         }
     }

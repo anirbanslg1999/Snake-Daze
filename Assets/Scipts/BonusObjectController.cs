@@ -78,7 +78,7 @@ public class BonusObjectController : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent<ColliderTag>(out ColliderTag tags))
         {
-            if(tags.type == ColliderTag.ColliderTags.Snake)
+            if(tags.type == ColliderTag.ColliderTags.Snake1)
             {
                 this.transform.position = holdPosition.position;
                 UIManager.Instance.StopDisplayingIcon();

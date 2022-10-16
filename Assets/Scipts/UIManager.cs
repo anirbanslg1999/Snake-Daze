@@ -18,17 +18,22 @@ public class UIManager : MonoBehaviour
     private bool isDisplayingIcon = false;
     private float timer = 10f;
     private int coinCount = 0;
+    public GameObject objectCheck;
+    private bool isGameOver = false;
 
     PlayerController playerController;
     InputAction pauseButton;
 
+    [Header("Panels")]
     [SerializeField] GameObject inGamePanel;
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject GameOverPanel;
     [SerializeField] GameObject sheepIconUI;
-    [SerializeField] TextMeshProUGUI coinTxt;
 
+    [Header("Text Gameobject")]
+    [SerializeField] TextMeshProUGUI coinTxt;
     [SerializeField] TextMeshProUGUI timerTxt;
+    [SerializeField] TextMeshProUGUI endPanelDialogueBox;
     private void Awake()
     {
         if(instance == null)
@@ -54,8 +59,13 @@ public class UIManager : MonoBehaviour
         inGamePanel.SetActive(true);
         pausePanel.SetActive(false);
         GameOverPanel.SetActive(false);
+        if(objectCheck == null)
         sheepIconUI.SetActive(false);
 
+    }
+    private void OnEnable()
+    {
+        objectCheck = GameObject.FindGameObjectWithTag("Multiplayer");
     }
     public void StartDisplayIcon()
     {
@@ -69,6 +79,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         PauseMenu();
+        if(objectCheck == null)
         DisplayIcon();
     }
     private void DisplayIcon()
@@ -97,26 +108,55 @@ public class UIManager : MonoBehaviour
     }
     private void PauseMenu()
     {
-        if (isPaused)
+        if (isPaused || isGameOver)
         {
+            Time.timeScale = 0;
+            if (isPaused)
+            {
             inGamePanel.SetActive(false);
             pausePanel.SetActive(true);
-            GameOverPanel.SetActive(false);
+            }
         }
         else
         {
+            Time.timeScale = 1;
             inGamePanel.SetActive(true);
             pausePanel.SetActive(false);
-            GameOverPanel.SetActive(false);
         }
         
     }
 
     public void GameOver()
     {
+        isGameOver = true;
+        AudioManager.Instance.PlayEffectSound(SoundTypes.GameOver);
         inGamePanel.SetActive(false);
         pausePanel.SetActive(false);
         GameOverPanel.SetActive(true);
+        endDialogueBox();
+    }
+    private void endDialogueBox()
+    {
+        if(objectCheck != null)
+        {
+            int tempValue = MultiplayerManager.Instance.getPlayer2Score();
+            if(coinCount == tempValue)
+             {
+                 endPanelDialogueBox.text = "It's a draw between the player with a tie score of : " + coinCount.ToString();
+             }
+             else if (coinCount > tempValue)
+             {
+                 endPanelDialogueBox.text = "Player 1 won with a score of : " + coinCount.ToString();
+             }
+             else if(coinCount < tempValue)
+             {
+                 endPanelDialogueBox.text = "Player 2 won with a score of : " + tempValue.ToString();
+             }
+        }
+        else
+        {
+            endPanelDialogueBox.text = "Your total score is : " + coinCount.ToString();
+        }
     }
 
     private void PauseCheck(InputAction.CallbackContext context)
@@ -131,18 +171,27 @@ public class UIManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        AudioManager.Instance.PlayEffectSound(SoundTypes.ButtonPressed);
         SceneManager.LoadScene(0);
     }
 
     public void QuitGame()
     {
+        AudioManager.Instance.PlayEffectSound(SoundTypes.ButtonPressed);
         Application.Quit();
     }
 
     public void ResumeGame()
     {
+        AudioManager.Instance.PlayEffectSound(SoundTypes.ButtonPressed);
         isPaused = false;
     }
+    public void PlayAgain()
+    {
+        AudioManager.Instance.PlayEffectSound(SoundTypes.ButtonPressed);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 
 
 }

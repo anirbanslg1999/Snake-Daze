@@ -5,7 +5,8 @@ public class ColliderTag : MonoBehaviour
     public ColliderTags type;
     public enum ColliderTags
     {
-        Snake,
+        Snake1,
+        Snake2,
         SnakeBody,
         Food,
         Creatures,

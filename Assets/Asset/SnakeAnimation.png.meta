@@ -132,10 +132,10 @@ TextureImporter:
       name: SnakeAnimation_0
       rect:
         serializedVersion: 2
-        x: 103
-        y: 83
-        width: 393
-        height: 482
+        x: 67
+        y: 81
+        width: 442
+        height: 484
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,8 +143,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf778789ca5aa1846a486639f66e11bb
-      internalID: 1198759649
+      spriteID: ac7e0c72313a5bc459312d03f85197db
+      internalID: 845111015
       vertices: []
       indices: 
       edges: []
@@ -156,7 +156,7 @@ TextureImporter:
         x: 602
         y: 83
         width: 386
-        height: 482
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,8 +164,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4ab19cf432c0a648abc9af6fd3b09d1
-      internalID: -1145710591
+      spriteID: deb7f9399de0bef498afb160fdb626f0
+      internalID: 824242330
       vertices: []
       indices: 
       edges: []
@@ -185,8 +185,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a245b299f3836640a2c7b49629f2964
-      internalID: 2060924298
+      spriteID: bff32541a2fa59e4085733af046b62d5
+      internalID: 1453061661
       vertices: []
       indices: 
       edges: []
@@ -202,9 +202,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SnakeAnimation_0: 1198759649
-      SnakeAnimation_1: -1145710591
-      SnakeAnimation_2: 2060924298
+      SnakeAnimation_0: 845111015
+      SnakeAnimation_1: 824242330
+      SnakeAnimation_2: 1453061661
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

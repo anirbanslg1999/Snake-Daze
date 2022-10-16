@@ -55,18 +55,36 @@ public class FoodController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<SnakeController>() != null)
+        if(collision.gameObject.TryGetComponent<ColliderTag>(out ColliderTag tags))
         {
-            if (foodType == FoodType.Healthy)
+            if(tags.type == ColliderTag.ColliderTags.Snake1)
             {
-                UIManager.Instance.IncrementCoinUI(healthyFoodValue);
+                if (foodType == FoodType.Healthy)
+                {
+                    UIManager.Instance.IncrementCoinUI(healthyFoodValue);
+                }
+                else if (foodType == FoodType.SpecialFood)
+                {
+                    UIManager.Instance.IncrementCoinUI(specialHealthFoodValue);
+                }
+                AudioManager.Instance.PlayEffectSound(SoundTypes.Collectable);
+                FoodPositionAllocation();
             }
-            else if(foodType == FoodType.SpecialFood)
+            else if (tags.type == ColliderTag.ColliderTags.Snake2)
             {
-                UIManager.Instance.IncrementCoinUI(specialHealthFoodValue);
+                if (foodType == FoodType.Healthy)
+                {
+                    MultiplayerManager.Instance.IncrementCoinUI(healthyFoodValue);
+                }
+                else if (foodType == FoodType.SpecialFood)
+                {
+                    MultiplayerManager.Instance.IncrementCoinUI(specialHealthFoodValue);
+                }
+                AudioManager.Instance.PlayEffectSound(SoundTypes.Collectable);
+                FoodPositionAllocation();
             }
-            FoodPositionAllocation();
-            
+
+
         }
     }
 
