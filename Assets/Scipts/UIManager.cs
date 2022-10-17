@@ -18,7 +18,9 @@ public class UIManager : MonoBehaviour
     private int coinCount = 0;
     public GameObject objectCheck;
     private bool isGameOver = false;
-    private float levelTimerCount = 10;
+
+    [Header("Variables")]
+    [SerializeField] float levelTimerCount = 30;
 
     PlayerController playerController;
     InputAction pauseButton;
@@ -206,6 +208,8 @@ public class UIManager : MonoBehaviour
             endPanelDialogueBox.text = "Your total score is : " + coinCount.ToString();
         }
     }
+
+    // Scenario 4. where game gets over after certain time has passed.
     private void GameOverScenarioFourTimeOut()
     {
         GameOver();
