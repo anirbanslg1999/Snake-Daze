@@ -7,9 +7,10 @@ public class ColliderTag : MonoBehaviour
     {
         Snake1,
         Snake2,
-        SnakeBody,
+        SnakeBody1,
         Food,
         Creatures,
-        Boundary
+        Boundary,
+        SnakeBody2
     }
 }

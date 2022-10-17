@@ -83,6 +83,7 @@ public class BonusObjectController : MonoBehaviour
                 this.transform.position = holdPosition.position;
                 UIManager.Instance.StopDisplayingIcon();
                 UIManager.Instance.IncrementCoinUI(bonusCoinAmount);
+                AudioManager.Instance.PlayEffectSound(SoundTypes.Collectable);
             }
         }
     }

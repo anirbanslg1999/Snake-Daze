@@ -102,10 +102,31 @@ public class SnakeController : MonoBehaviour
             {
                 GrowBody();
             }
-            else if (tags.type == ColliderTag.ColliderTags.Boundary || tags.type == ColliderTag.ColliderTags.SnakeBody)
+            else if (tags.type == ColliderTag.ColliderTags.Boundary)
             {
-                // Game Over
-                UIManager.Instance.GameOver(character);
+                UIManager.Instance.GameOverScenarioOneWithBoundary(character);
+            }
+            else if(tags.type == ColliderTag.ColliderTags.SnakeBody1)
+            {
+                if(character == characterTypes.player1)
+                {
+                    UIManager.Instance.GameOverScenarioThreePlayerEatsHisOwnBody(character);
+                }
+                else
+                {
+                    UIManager.Instance.GameOverScenarioTwoEating(character);
+                }
+            }
+            else if(tags.type == ColliderTag.ColliderTags.SnakeBody2)
+            {
+                if (character == characterTypes.player2)
+                {
+                    UIManager.Instance.GameOverScenarioThreePlayerEatsHisOwnBody(character);
+                }
+                else
+                {
+                    UIManager.Instance.GameOverScenarioTwoEating(character);
+                }
             }
         }
     }

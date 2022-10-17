@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 using static SnakeController;
 
 public class UIManager : MonoBehaviour
@@ -21,6 +18,7 @@ public class UIManager : MonoBehaviour
     private int coinCount = 0;
     public GameObject objectCheck;
     private bool isGameOver = false;
+    private float levelTimerCount = 10;
 
     PlayerController playerController;
     InputAction pauseButton;
@@ -30,11 +28,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject GameOverPanel;
     [SerializeField] GameObject sheepIconUI;
+    [SerializeField] GameObject LevelTimer;
 
     [Header("Text Gameobject")]
     [SerializeField] TextMeshProUGUI coinTxt;
     [SerializeField] TextMeshProUGUI timerTxt;
     [SerializeField] TextMeshProUGUI endPanelDialogueBox;
+    [SerializeField] TextMeshProUGUI levelTimerTxt;
     private void Awake()
     {
         if(instance == null)
@@ -60,8 +60,14 @@ public class UIManager : MonoBehaviour
         inGamePanel.SetActive(true);
         pausePanel.SetActive(false);
         GameOverPanel.SetActive(false);
-        if(objectCheck == null)
-        sheepIconUI.SetActive(false);
+        if (objectCheck == null)
+        {
+            sheepIconUI.SetActive(true);
+        }
+        if (objectCheck != null)
+        {
+            LevelTimer.SetActive(true);
+        }
 
     }
     private void OnEnable()
@@ -80,8 +86,22 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         PauseMenu();
-        if(objectCheck == null)
-        DisplayIcon();
+        if(objectCheck == null) DisplayIcon();
+        if (objectCheck != null) LevelTimerCount();
+    }
+
+    private void LevelTimerCount()
+    {
+        levelTimerTxt.color = levelTimerCount > 10 ? Color.green : Color.red;
+        levelTimerTxt.text = levelTimerCount.ToString("0.00");
+        if(levelTimerCount > 0)
+        {
+            levelTimerCount -= Time.deltaTime;
+        }
+        else
+        {
+            GameOverScenarioFourTimeOut();
+        }
     }
     private void DisplayIcon()
     {
@@ -126,51 +146,94 @@ public class UIManager : MonoBehaviour
         }
         
     }
-
-    public void GameOver(characterTypes character)
+    // Scenario 1. Player collided with the wall will die and the opposite player will win.
+    public void GameOverScenarioOneWithBoundary(characterTypes character)
     {
-        isGameOver = true;
-        AudioManager.Instance.PlayEffectSound(SoundTypes.GameOver);
-        inGamePanel.SetActive(false);
-        pausePanel.SetActive(false);
-        GameOverPanel.SetActive(true);
-        endDialogueBox(character);
-    }
-    private void endDialogueBox(characterTypes character)
-    {
-        if(objectCheck != null)
+        GameOver();
+        if (objectCheck != null)
         {
             int tempValue = MultiplayerManager.Instance.getPlayer2Score();
-            if(character == characterTypes.player1)
+            if (character == characterTypes.player1)
             {
-                 endPanelDialogueBox.text = "Player 1 lost and Player 2 won win with a score of : " + tempValue.ToString();
+                endPanelDialogueBox.text = "Player 1 lost and Player 2 won win with a score of : " + tempValue.ToString();
             }
-            else if(character == characterTypes.player2)
+            else if (character == characterTypes.player2)
             {
-                 endPanelDialogueBox.text = "Player 2 lost and Player 1 won win with a score of : " + coinCount.ToString();
+                endPanelDialogueBox.text = "Player 2 lost and Player 1 won win with a score of : " + coinCount.ToString();
             }
-            else
-            {
-                if (coinCount == tempValue)
-                {
-                    endPanelDialogueBox.text = "It's a draw between the player with a tie score of : " + coinCount.ToString();
-                }
-                else if (coinCount > tempValue)
-                {
-                    endPanelDialogueBox.text = "Player 1 won with a score of : " + coinCount.ToString();
-                }
-                else if (coinCount < tempValue)
-                {
-                    endPanelDialogueBox.text = "Player 2 won with a score of : " + tempValue.ToString();
-                }
-            }
-            
         }
         else
         {
             endPanelDialogueBox.text = "Your total score is : " + coinCount.ToString();
         }
     }
+    // Scenario 2. where player 1 eats player 2 or viceversa.
+    public void GameOverScenarioTwoEating(characterTypes character)
+    {
+        GameOver();
+        if (objectCheck != null)
+        {
+            int tempValue = MultiplayerManager.Instance.getPlayer2Score();
+            if (character == characterTypes.player1)
+            {
+                endPanelDialogueBox.text = "Player 2 got eaten by Player 1 and Player 1 total score : " + coinCount.ToString();
+            }
+            else if (character == characterTypes.player2)
+            {
+                endPanelDialogueBox.text = "Player 1 got eaten by Player 2 and Player 2 total score : " + tempValue.ToString();
+            }
+        }
+        
+    }
+    // Senario 3. If player eats his own body therefore opponent should win and viceversa.
+    public void GameOverScenarioThreePlayerEatsHisOwnBody(characterTypes character)
+    {
+        GameOver();
+        if (objectCheck != null)
+        {
+            int tempValue = MultiplayerManager.Instance.getPlayer2Score();
+            if (character == characterTypes.player1)
+            {
+                endPanelDialogueBox.text = "Player 1 ate his own body, So Player 2 won with a total score : " + tempValue.ToString();
+            }
+            else if(character == characterTypes.player2)
+            {
+                endPanelDialogueBox.text = "Player 2 ate his own body, So Player 1 won with a total score : " + coinCount.ToString();
+            }
+        }
+        else
+        {
+            endPanelDialogueBox.text = "Your total score is : " + coinCount.ToString();
+        }
+    }
+    private void GameOverScenarioFourTimeOut()
+    {
+        GameOver();
+        int tempValue = MultiplayerManager.Instance.getPlayer2Score();
+        if (coinCount == tempValue)
+        {
+            endPanelDialogueBox.text = "It's a draw between the player with a tie score of : " + coinCount.ToString();
+        }
+        else if (coinCount > tempValue)
+        {
+            endPanelDialogueBox.text = "Player 1 won with a score of : " + coinCount.ToString();
+        }
+        else if (coinCount < tempValue)
+        {
+            endPanelDialogueBox.text = "Player 2 won with a score of : " + tempValue.ToString();
+        }
+
+    }
+
+    private void GameOver()
+    {
+        isGameOver = true;
+        AudioManager.Instance.PlayEffectSound(SoundTypes.GameOver);
+        inGamePanel.SetActive(false);
+        pausePanel.SetActive(false);
+        GameOverPanel.SetActive(true);
+    }
+
 
     private void PauseCheck(InputAction.CallbackContext context)
     {
