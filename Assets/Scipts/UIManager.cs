@@ -62,10 +62,6 @@ public class UIManager : MonoBehaviour
         inGamePanel.SetActive(true);
         pausePanel.SetActive(false);
         GameOverPanel.SetActive(false);
-        if (objectCheck == null)
-        {
-            sheepIconUI.SetActive(true);
-        }
         if (objectCheck != null)
         {
             LevelTimer.SetActive(true);
@@ -102,7 +98,9 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            levelTimerCount = 10;
             GameOverScenarioFourTimeOut();
+
         }
     }
     private void DisplayIcon()
